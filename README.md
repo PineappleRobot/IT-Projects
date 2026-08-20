@@ -17,4 +17,4 @@ Each project folder includes its own write up with steps taken, screenshots wher
 | [EC2, S3 and IAM Webserver Deployment](./Using%20EC2%2C%20S3%20and%20IAM%20to%20deploy%20a%20Webserver) | Deployed a web application on an EC2 instance running Nginx, using S3 for staging and IAM for secure access control. |
 | [S3 Static Web Hosting](./S3%20Static%20Web%20Hosting) | Configured an S3 bucket for secure static website hosting with a custom bucket policy. |
 | [Budgets, Alarms and SNS](./Budgets%20Alarms%20SNS) | Automated AWS cost monitoring system using Budgets, triggering SNS email alerts at a defined spend threshold. |
-| [Powershell AD Script](./PS Script) | Powershell script for automated AD user reports. |
+| [Powershell AD Script](./PS%20Script) | Powershell script for automated AD user reports. |
