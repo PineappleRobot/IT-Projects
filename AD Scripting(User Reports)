@@ -1,2 +1,0 @@
-# Powershell scripting for Active Directory
-A powershell script that outputs a report of all users, group memberships and disabled accounts to a CSV File on the desktop(configurable) for easy viewing and admin.
