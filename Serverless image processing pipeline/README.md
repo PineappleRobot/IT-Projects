@@ -1,40 +1,40 @@
-**Project: ****Serverless Image Processing Pipeline**
+# **_Project: Serverless Image Processing Pipeline_**
 
 ## Overview:
 
 Using Lambda to trigger a function from an upload to an S3 bucket, the function will take the uploaded image and create a 128x128 thumbnail upload that thumbnail to a separate S3 bucket and log the metadata (Filename and Timestamp) into a DynamoDB table.
 
-**Skills and Concepts Demonstrated**
+Skills and Concepts Demonstrated
 
-**Identity and Access Management (IAM):** Securely granting permissions to compute resources using IAM Roles.
+Identity and Access Management (IAM): Securely granting permissions to compute resources using IAM Roles.
 
-**S3 Access Control:** Implementing the principle of least privilege by restricting S3 access only to the necessary Lambda Role.
+S3 Access Control: Implementing the principle of least privilege by restricting S3 access only to the necessary Lambda Role.
 
-**Storage and Compute separation: **Separation of unstructured data from S3, the compute layer (Lambda) and the structured data in a DynamoDB table for better maintainability
+Storage and Compute separation: Separation of unstructured data from S3, the compute layer (Lambda) and the structured data in a DynamoDB table for better maintainability
 
-**Serverless design: **Implementing an event driven architecture that eliminates idle server costs by using Lambda and event triggers (S3 event notifications)
+Serverless design: Implementing an event driven architecture that eliminates idle server costs by using Lambda and event triggers (S3 event notifications)
 
-**Architecture Overview (The Plan)**
+Architecture Overview (The Plan)
 
-**S3 Bucket:** The two buckets created will 1. Host the uploaded files triggering the lambda function and 2. Host the processed images.
+S3 Bucket: The two buckets created will 1. Host the uploaded files triggering the lambda function and 2. Host the processed images.
 
-**IAM Role:** This is the secure way to grant the Lambda function access to both the S3 buckets and the DynamoDB table.
+IAM Role: This is the secure way to grant the Lambda function access to both the S3 buckets and the DynamoDB table.
 
-**Lambda Layer****:** I’ll be using the Pillow library for python 3.14 which is not by default included within Lambda, so I’ll need to create a Lambda Layer and assign it to the function.
+Lambda Layer: I’ll be using the Pillow library for python 3.14 which is not by default included within Lambda, so I’ll need to create a Lambda Layer and assign it to the function.
 
-**DynamoDB****: **Create a DynamoDB table to host the Filename (partition key) and Timestamp (sort key) of the processed images.
+DynamoDB: Create a DynamoDB table to host the Filename (partition key) and Timestamp (sort key) of the processed images.
 
-**Lambda Function****:** This is where I’ll write my code to handle the image processing, the uploading of the edited image to the 2nd S3 bucket and the upload of the metadata to the DynamoDB.
+Lambda Function: This is where I’ll write my code to handle the image processing, the uploading of the edited image to the 2nd S3 bucket and the upload of the metadata to the DynamoDB.
 
-**Section 1: ****Creation of the ****S3 Bucket****s, ****DynamoDB ****table and Lambda function**
+Section 1: Creation of the S3 Buckets, DynamoDB table and Lambda function
 
-**1. Creating ****the ****two S3 buckets**
+1. Creating the two S3 buckets
 
 First, I need to create a role that my EC2 instance can assume at launch. This is how I securely grant access to my S3 bucket.
 
 Firstly, I’ll need to create two S3 buckets that will host my user uploaded images and the processed images. Then later well assign the necessary permissions to allow our Lambda function to access the buckets.
 
-**Steps:**
+Steps:
 
 Navigate to the S3 Console and select Create bucket.
 
@@ -43,11 +43,11 @@ Name the bucket I’ve gone with image-pipe-line-orig and image-pipe-line-resize
 Scroll to the bottom of the page and click the “Add new tag” button and assign any tags I’ve gone with Category > Image Pipeline for both the buckets.
 
 
-**2. Creating ****the ****DynamoDB Table**
+2. Creating the DynamoDB Table
 
 This Table will be where we hold all of our metadata the Filename and the Timestamp of the operation.
 
-**Steps:**
+Steps:
 
 Navigate to the DynamoDB console and click on the “Create table” button
 
@@ -61,11 +61,11 @@ Like with the S3 bucket well add a tag to the table to help with organisation, I
 
 Click the “Create Table” button at the bottom.
 
-**3. ****Creating ****the Lambda function.**
+3. Creating the Lambda function.
 
 The Lambda function will be where the Python code will run to process the image and store the metadata into our DynamoDB
 
-**Steps:**
+Steps:
 
 Navigate to the Lambda console and click “Create function”
 
@@ -82,13 +82,13 @@ Expand the “Change default execution role” section and make a note of the ro
 Under additional configurations there will be the option to add a tag to the function and again, I’ve gone with Category > Image Pipeline
 
 
-**Section 2: ****Permissions**
+Section 2: Permissions
 
-**Setting permissions for the two S3 buckets**
+Setting permissions for the two S3 buckets
 
 Both the buckets will need the proper policy adjustments to allow our Lambda function(The IAM role accossiated with the function) to ListBucket, GetBucketLocation, PutObject and  GetObject
 
-**Steps:**
+Steps:
 
 Navigate back to the first S3 bucket that was created
 
@@ -102,12 +102,12 @@ The “Resource” section needs to allow access to the bucket and to the object
 
 Do this for both the buckets only thing that needs to change is the “Resource” section, just adjust the bucket name.
 
-**2****. ****Setting permissions for the IAM role created by Lambda**
+2. Setting permissions for the IAM role created by Lambda
 
 
 The Lambda created IAM role will need permissions to before being able to do anything with our S3 buckets, the objects within them and the DynamoDB table.
 
-**Steps:**
+Steps:
 
 Navigate to the IAM console and select the Roles section
 
@@ -121,7 +121,7 @@ Add the same permission added to the S3 buckets
 
 Create a new inline policy, this time we will allow the function to access the DynamoDB (PutItem)
 
-**Section ****3****: ****Lambda** **and verification**
+Section 3: Lambda and verification
 
 ### 3. Adding Pillow as a Lambda Layer
 
@@ -139,15 +139,15 @@ Open CMD and navigate to the python subfolder
 
 Run the following command within CMD: 
 
-pip install ^
+pip install 
 
---platform manylinux2014_x86_64 ^
+--platform manylinux2014_x86_64 
 
---target python/ ^
+--target python/ 
 
---implementation cp ^
+--implementation cp 
 
---python-version 3.14 ^
+--python-version 3.14 
 
 --only-binary=:all: Pillow
 
@@ -202,7 +202,7 @@ Click “Add”
 
 Now time to actually write the function, I won’t go into detail here about how to use boto3 or how to write a python function but I’ll have the code available at the bottom of this document
 
-**7****. Verification**** and code**
+7. Verification and code
 
 Once everything is done test the project by uploading an image to the host bucket and either check the CloudWatch for any errors but its more fun to check the other bucket and the DynamoDB table. 
 
