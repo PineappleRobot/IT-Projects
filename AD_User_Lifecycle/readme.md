@@ -53,3 +53,22 @@ Reset John Smith's password through Active Directory Users and Computers, with "
 Disabled John Smith's account to immediately revoke access while retaining the account itself, standard practice for a leaver so the account can be audited or reviewed before deletion rather than removed immediately.
 
 ![Account Disabled Confirmation](Images/Account.Disabled.png)
+
+## 7. Adding A Network Shared Folder
+### 1, Create and Share the folder on the Server
+* Create the folder
+* Go into properties and select the sharing tab -> Advanced Sharing
+* Tick Share this folder and name the share(SalesShare)
+* Under permissions remove the "Everyone" group and add the "Sales Share" group
+* In the security tab select edit
+* Add the "Sales Share" group and modify the permissions
+* Click thorugh the Apply buttons
+![Server network permissions](Images/FolderNetworkPerms.png)
+![Server network security](Images/FolderNetworkSec.png)
+![Server network folder](Images/ServerFolder.png)
+
+### 2, Adding it as a location on the users computer(dekstop)
+* Add a new shortcut to the Desktop
+* Enter in the network location for the shared folder(\\WIN-D42S0FM9I9A\SalesShare)
+* Finnally click okay and the folder should be there.
+![User Desktop](Images/UserDesktop.png)
