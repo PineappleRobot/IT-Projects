@@ -8,7 +8,7 @@ Each project folder includes its own write up with steps taken, screenshots wher
 
 | Project | Description |
 |:---:|:---:|
-| [AD User Lifecycle](./AD_User_Lifecycle) | Documented walkthrough of core Active Directory user management tasks, covering account creation, group membership, password resets and disabling leaver accounts, using a nested group structure. |
+| [AD User Lifecycle](./AD_User_Lifecycle) | Documented walkthrough of core Active Directory user management tasks, covering account creation, group membership, password resets, adding Network Folders to user groups and disabling leaver accounts, using a nested group structure. |
 | [AD DNS + DHCP Domain Setup](./AD-DNS+DHCP-DomainSetup) | Set up a second VM as a domain joined client, configuring DHCP and DNS on the domain controller to support automatic network configuration for new devices. |
 | [Health Report](./Health%20Report) | Python script that generates a real time system health report covering CPU, RAM, disk usage, running processes and network connectivity. |
 | [Log Analysis](./Log%20Analysis) | Python script that parses syslog format log files, categorises entries by severity, and identifies the most frequent error and warning sources. |
